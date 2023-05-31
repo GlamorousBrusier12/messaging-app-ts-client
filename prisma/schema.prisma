@@ -1,0 +1,25 @@
+// user schema
+model User{
+  id Int @id @default(autoincrement())
+  name String
+  createdAt DateTime @default(now())
+  messages Message[]
+}
+
+// message schema
+model Message{
+  id Int @id @default(autoincrement())
+  body String
+  createdAt DateTime @default(now())
+  UserId Int
+  user User @relation(fields: [UserId], references: [id])
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
